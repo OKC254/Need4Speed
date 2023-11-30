@@ -1,14 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-    <div class="content">
+    <div class="home">
         <h1>EyeSpeeD</h1>
         <p>
             A web-based application that provides real-time<br/>
             vehicle speed estimation and identification.
         </p>
+        <div class="btn-dark">
+            <a class="btn btn-primary" href="http://127.0.0.1:8000/upload/">Enter Video Input</a>
+        </div>
     </div>
-    <div class="btn-dark">
-        <a class="btn btn-primary" href="http://127.0.0.1:8000/upload/">Enter Video Input</a>
-    </div>
-
 {% endblock content %}

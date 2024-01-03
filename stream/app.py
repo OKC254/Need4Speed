@@ -4,7 +4,7 @@ import PIL
 from PIL import Image
 # External packages
 import streamlit as st
-
+import pandas as pd
 # Local Modules
 import settings
 import helper
@@ -25,16 +25,18 @@ st.sidebar.header("ML Model Config")
 
 # Model Options
 model_type = st.sidebar.radio(
-    "Select Task", ['Detection', 'License Plate Detection'])
+    "Select Task", ['Detection', 'License Plate Detection', 'Speed Detection'])
 
 confidence = float(st.sidebar.slider(
     "Select Model Confidence", 25, 100, 40)) / 100
 
-# Selecting Detection Or Segmentation
+# Selecting Detection Or License Plate
 if model_type == 'Detection':
     model_path = Path(settings.DETECTION_MODEL)
 elif model_type == 'License Plate Detection':
     model_path = Path(settings.LICENSE_PLATE_MODEL)
+elif model_type == 'Speed Detection':
+    model_path = Path(settings.SPEED_MODEL)
 
 # Load Pre-trained ML Model
 try:
@@ -106,5 +108,43 @@ elif source_radio == settings.RTSP:
 elif source_radio == settings.YOUTUBE:
     helper.play_youtube_video(confidence, model)
 
+# elif source_radio == settings.LICENSE_PLATE_EXTRACTION:
+#     helper.speed_detector(confidence, model)
+
+
+# elif source_radio == settings.SPEED:
+#     helper.speed(confidence, model)
+
 else:
     st.error("Please select a valid source type!")
+
+st.sidebar.header("TASK")
+source_radio1 = st.sidebar.radio("Select task", settings.SOURCES_LIST2)
+if source_radio1 == settings.LICENSE_PLATE_EXTRACTION:
+    helper.speed_detector(confidence, model)
+    df = pd.read_csv("results1.csv")
+    st.write(df)
+    def convert_df(df):
+        return df.to_csv(index=False).encode('utf-8')
+    csv = convert_df(df)
+    st.download_button(
+        "Download Data",
+        csv,
+        "results1.csv",
+        key = 'download-csv'
+    )
+elif source_radio1 == settings.SPEED:
+    helper.speed(confidence, model)
+    f = pd.read_csv("results2.csv")
+    st.write(f)
+    def convert_f(f):
+        return f.to_csv(index=False).encode('utf-8')
+    csv2 = convert_f(f)
+    st.download_button(
+        "Download Data",
+        csv2,
+        "results2.csv",
+        key = 'download-csv'
+    )
+else:
+    st.error("Please select a valid task!")

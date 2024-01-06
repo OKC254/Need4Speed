@@ -257,8 +257,8 @@ def speed_detector(conf, model):
         try:
             GREEN = (0, 255, 0)
             WHITE = (255, 255, 255)
-            vehicle_detector = model
-            license_plate_detector = YOLO('models/license.pt')
+            vehicle_detector = YOLO('models/vehicle_detect.pt')
+            license_plate_detector = model
             vid_cap = cv2.VideoCapture(
                 str(settings.VIDEOS_DICT.get(source_vid)))
             results = {}
@@ -266,7 +266,7 @@ def speed_detector(conf, model):
             st_frame = st.empty()
             frame_nmr = -1
             ret = True
-            while ret and frame_nmr < 20:
+            while True:
                 frame_nmr += 1
                 ret, frame = vid_cap.read()
                 if ret:
@@ -329,10 +329,10 @@ def speed_detector(conf, model):
 
 
 def speed(conf, model):
-    source_vid = st.sidebar.selectbox(
+    source_vid1 = st.sidebar.selectbox(
         "Choose a video...", settings.VIDEOS_DICT.keys())
     is_display_tracker, tracker = display_tracker_options()
-    with open(settings.VIDEOS_DICT.get(source_vid), 'rb') as video_file:
+    with open(settings.VIDEOS_DICT.get(source_vid1), 'rb') as video_file:
         video_bytes = video_file.read()
     if video_bytes:
         st.video(video_bytes)
@@ -340,7 +340,7 @@ def speed(conf, model):
     if st.sidebar.button('Detect Video Objects'):
         try:
             vid_cap = cv2.VideoCapture(
-                str(settings.VIDEOS_DICT.get(source_vid)))
+                str(settings.VIDEOS_DICT.get(source_vid1)))
             smodel  = model
             # mask = cv2.imread("images/mask.png")
             tracker1 = DeepSort(
@@ -415,7 +415,7 @@ def speed(conf, model):
                             speedres[frame_nmr][track_id] = {'vehicle': {'speed': estimatedSpeedValue}}
                             
 
-                    cls = track.get_det_class()
+                    # cls = track.get_det_class()
                     currentClass = smodel.names[cls]
                     clsColor = get_class_color(currentClass)
 
@@ -423,7 +423,7 @@ def speed(conf, model):
 
                     cvzone.putTextRect(
                             img, 
-                            text = f"{smodel.names[cls]} {estimatedSpeedValue} km/h",
+                            text = f"{estimatedSpeedValue} km/h",
                             pos=(max(0, x1), max(35, y1)),
                             scale = 1,
                             thickness=1, 
@@ -446,7 +446,7 @@ def speed(conf, model):
                 #     break
             else:
                 vid_cap.release()
-                cv2.destroyAllWindows()  
+            cv2.destroyAllWindows()
 
         except Exception as e:
             st.sidebar.error("Error loading video: " + str(e))

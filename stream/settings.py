@@ -46,6 +46,8 @@ VIDEO_11_PATH = VIDEO_DIR / 'video_11.mp4'
 VIDEO_12_PATH = VIDEO_DIR / 'video_12.mp4'
 VIDEO_13_PATH = VIDEO_DIR / 'video_13.mp4'
 VIDEO_14_PATH = VIDEO_DIR / 'video_14.mp4'
+RENAULT_PATH = VIDEO_DIR / 'renault.mp4'
+OPEL_PATH = VIDEO_DIR / 'opel.mp4'
 VIDEOS_DICT = {
     'video_1': VIDEO_1_PATH,
     'video_2': VIDEO_2_PATH,
@@ -61,13 +63,14 @@ VIDEOS_DICT = {
     'video_12': VIDEO_12_PATH,
     'video_13': VIDEO_13_PATH,
     'video_14': VIDEO_14_PATH,
+    'renault': RENAULT_PATH,
+    'opel': OPEL_PATH,
 }
 
 # ML Model config
 MODEL_DIR = ROOT / 'models'
-DETECTION_MODEL = MODEL_DIR / 'vehicle_detect.pt'
 LICENSE_PLATE_MODEL = MODEL_DIR / 'license.pt'
-SPEED_MODEL = MODEL_DIR / 'yolov8l.pt'
+SPEED_MODEL = MODEL_DIR / 'speed.pt'
 
 # Webcam
 WEBCAM_PATH = 0

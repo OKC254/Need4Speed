@@ -253,7 +253,7 @@ def speed_detector(conf, model):
     if video_bytes:
         st.video(video_bytes)
 
-    if st.sidebar.button('Detect Video Objects'):
+    if st.sidebar.button('Run App'):
         try:
             GREEN = (0, 255, 0)
             WHITE = (255, 255, 255)
@@ -337,7 +337,7 @@ def speed(conf, model):
     if video_bytes:
         st.video(video_bytes)
 
-    if st.sidebar.button('Detect Video Objects'):
+    if st.sidebar.button('Estimate Speed'):
         try:
             vid_cap = cv2.VideoCapture(
                 str(settings.VIDEOS_DICT.get(source_vid1)))

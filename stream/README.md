@@ -1,4 +1,5 @@
-To run clone the repository
+To run:
+Clone the repository
 Navigate to stream directory
-pip install -r requirements.txt
-Run streamlit run app.py
+On the terminal with a virtual envrionment created has been activated run 'pip install -r requirements.txt'
+The on terminal as well run 'streamlit run app.py'
